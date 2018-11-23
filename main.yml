@@ -1,0 +1,17 @@
+---
+- name: installing dependencies
+  apt:
+    name: xterm
+
+- name: profile.d
+  copy:
+    src: matlab.sh
+    dest: /etc/profile.d/matlab.sh
+
+- name: creating directory
+  file:
+    path: /opt/MATLAB
+    state: directory
+    owner: octave
+    group: octave
+    mode: 0755

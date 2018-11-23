@@ -1,0 +1,29 @@
+---
+- hosts: all
+  tasks:
+    - name: installing dependencies
+      apt:
+        name:
+          - xterm
+          - libgtk2.0-0 # Thank you ArchWiki, without you I can't get SIMULINK
+          - libasound2
+          - libnss3
+          - libxss1
+
+    - name: .env
+      copy:
+        src: .env
+        dest: /opt/matlab-env.sh
+
+    - name: profile.d
+      copy:
+        src: matlab.sh
+        dest: /etc/profile.d/matlab.sh
+
+    - name: creating directory
+      file:
+        path: /opt/MATLAB
+        state: directory
+        owner: octave
+        group: octave
+        mode: 0755

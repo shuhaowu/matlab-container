@@ -1,0 +1,31 @@
+name: matlab
+image: ubuntu/xenial
+
+users:
+  - name: octave
+    shell: /bin/bash
+    sudoer: yes
+
+lxc_config:
+  volatile.eth0.hwaddr: ${MATLAB_MAC_ADDRESS}
+
+shell:
+  user: octave
+
+shares:
+  - source: matlab
+    dest: /mnt/matlab
+    share_properties:
+      optional: "true"
+
+  - source: ${MATLAB_SHARE_PATH}
+    dest: /home/octave/shared
+
+x11:
+  enabled: yes
+  extra_driver_paths:
+    - /usr/lib/nvidia-384
+
+provisioning:
+  - type: ansible
+    playbook: provisioning.yml
